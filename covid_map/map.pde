@@ -21,11 +21,6 @@ public class Map {
         for(int i = 0; i < this.original.getChildCount(); i++) {
             
             PShape child = this.original.getChild(i);
-            /*
-            child.beginShape();
-            child.fill(255);
-            child.endShape(CLOSE);
-*/
             countries.add(child);
         }
     }
@@ -37,13 +32,26 @@ public class Map {
         for (int i = 0; i < this.original.getChildCount(); ++i) {
             PShape country = this.countries.get(i);
             if(country.contains(getMouseX(), getMouseY())){
-//println(slider.getValueI());
-                color c = color(slider.getValueF());
-                country.setFill(c);
 
-                println(countriesData.getAllCasesForCountry(country.getName()));
+
+                ///color c = color(slider.getValueF());
+                
+                country.setFill(hoverColor);
+
+                //println(countriesData.getAllCasesForCountry(country.getName()));
             } else {
-                country.setFill(unHoverColor);
+              
+                Country countryData = countriesData.getDataOfCountry(country.getName());
+                if(countryData != null) {
+                    int countryCases = countryData.getSumOfCases();
+                    int maxCases = countriesData.getMaxCase();
+                    int minCases = countriesData.getMinCase();
+                    color c = mapCasesColor(countryCases, minCases, maxCases);
+                    println(maxCases);
+                    println(minCases);
+                    country.setFill(c);
+                }
+                
             }
         }
     }
