@@ -20,6 +20,9 @@ public class Mapper {
     int getDateSize(){
         return dates.size();
     }
+    int getCountriesSize(){
+        return countries.size();
+    }
 
     private static Mapper INSTANCE;
     public static Mapper getInstance(){
