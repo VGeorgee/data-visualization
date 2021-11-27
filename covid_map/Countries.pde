@@ -1,6 +1,6 @@
 public class Countries {
 
-    private String[] countryNames = { "Albania", "Andorra", "Austria", "Belarus", "Belgium", "Bosnia", "Bulgaria", "Croatia", "Czech Republic", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Ireland", "Italy", "Kosovo", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Moldova", "Montenegro", "Netherlands", "Norway", "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Ukraine", "United Kingdom"};
+    private String[] countryNames = { "Albania", "Andorra", "Austria", "Belarus", "Belgium", "Bosnia", "Bulgaria", "Croatia", "Czech Republic", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Ireland", "Italy", "Kosovo", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Moldova", "Montenegro", "Netherlands", "Norway", "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Ukraine", "United Kingdom", "Serbia", "Bosnia and Herzegovina","Macedonia"};
 // MACEDONIA AND SERBIA IS MISSING FROM DATA
     ArrayList<Country> countriesList = new ArrayList<Country>();
     HashMap<String, Country> countriesMap = new HashMap<>();
@@ -32,6 +32,7 @@ public class Countries {
                 country.add(dailyCase);
             }
             country.initialize();
+            setInterval(0, 334);
         }
     }
     
