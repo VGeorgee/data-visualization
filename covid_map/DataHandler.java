@@ -1,3 +1,5 @@
+import javax.xml.crypto.Data;
+
 public class DataHandler {
     private int [][] cases;
     private int [][] deaths;
@@ -9,8 +11,11 @@ public class DataHandler {
 
     private Mapper mapper;
 
-    public void loadData(String cases, String deaths, String vaccinated, String population){
-
+    public void loadData(String casesFileName, String deathsFileName, String vaccinatedFileName, String populationFileName){
+        cases = DataLoader.loadCases(casesFileName);
+        deaths = DataLoader.loadDeaths(deathsFileName);
+        vaccinated = DataLoader.loadVaccinations(vaccinatedFileName);
+        population = DataLoader.loadPopulation(populationFileName);
     }
 
     public void setInterval(int start, int end){
