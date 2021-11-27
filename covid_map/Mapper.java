@@ -1,23 +1,31 @@
 import java.util.HashMap;
 
 public class Mapper {
-    private static HashMap<String, Integer> dates = new HashMap<>();
-    private static HashMap<String, Integer> countries = new HashMap<>();
+    private HashMap<String, Integer> dates = new HashMap<>();
+    private HashMap<String, Integer> countries = new HashMap<>();
 
-    static int dateIndex(String date) {
+    int dateIndex(String date) {
         if(!dates.containsKey(date)){
             dates.put(date, dates.size());
         }
         return dates.get(date);
     }
-    static int countryIndex(String countryName) {
+    int countryIndex(String countryName) {
         if (!countries.containsKey(countryName)) {
             countries.put(countryName, countries.size());
         }
         return countries.get(countryName);
     }
 
-    static int getDateSize(){
+    int getDateSize(){
         return dates.size();
+    }
+
+    private static Mapper INSTANCE;
+    public static Mapper getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new Mapper();
+        }
+        return INSTANCE;
     }
 }
