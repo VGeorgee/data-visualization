@@ -12,8 +12,8 @@ public class DataHandler {
     private Mapper mapper;
 
     public void loadData(String casesFileName, String deathsFileName, String vaccinatedFileName, String populationFileName){
-        cases = DataLoader.loadCases(casesFileName);
-        deaths = DataLoader.loadDeaths(deathsFileName);
+        cases = DataLoader.load(casesFileName);
+        deaths = DataLoader.load(deathsFileName);
         vaccinated = DataLoader.loadVaccinations(vaccinatedFileName);
         population = DataLoader.loadPopulation(populationFileName);
     }

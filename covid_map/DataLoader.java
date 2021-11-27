@@ -4,9 +4,9 @@ import java.util.Scanner;
 public class DataLoader {
 
     final static int NUMBER_OF_COUNTRIES = 39;
-    final static int MAX_NUMBER_OF_DATA = 700;
+    final static int MAX_NUMBER_OF_DATA = 676;
 
-    static int[][] loadCases(String fileName) {
+    static int[][] load(String fileName) {
         final Mapper mapper = Mapper.getInstance();
         Scanner scanner;
         try{
@@ -27,16 +27,18 @@ public class DataLoader {
             for(int i = 1; i < header.length; i++){
                 final int countryIndex = mapper.countryIndex(header[i]);
                 int value = tokens[i].equals("") ? 0 : Integer.parseInt(tokens[i]);
-                result[countryIndex][dateIndex] = result[countryIndex][dateIndex - 1] + value;
+                result[countryIndex][dateIndex] = value;// + result[countryIndex][dateIndex - 1];
             }
         }
 
         return result;
     }
+    /*
     static int[][] loadDeaths(String fileName){
         final Mapper mapper = Mapper.getInstance();
         return new int[1][1];
-    }
+    }*/
+
     static int[][] loadVaccinations(String fileName){
         final Mapper mapper = Mapper.getInstance();
         return new int[1][1];
