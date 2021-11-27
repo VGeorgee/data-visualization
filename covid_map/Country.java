@@ -10,6 +10,10 @@ public class Country {
         this.name = name;
     }
 
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
     private void draw(){
 
     }
