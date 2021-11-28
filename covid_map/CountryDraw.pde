@@ -64,7 +64,6 @@ void calculateColorOfCountries(){
   ArrayList<Country> countries = map.getCountries();
   for(Country country: countries) {
     float percentage = (float)country.getCasesPercentage();
-    println(percentage);
     country.setColour(mapCasesColor(percentage));
   }
 }
