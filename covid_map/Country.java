@@ -1,13 +1,14 @@
 public class Country implements Comparable<Country>{
     private Object shape;
     private String name;
-
-
-
     private String ID;
     private boolean isSelected;
     private boolean isHover;
     private int colour;
+
+
+
+    private double casesPercentage;
 
 
     static final int HOVER_BACKGROUND = 0xCC80AAFF;
@@ -57,6 +58,13 @@ public class Country implements Comparable<Country>{
         return shape;
     }
 
+    public double getCasesPercentage() {
+        return casesPercentage;
+    }
+
+    public void setCasesPercent(double casesPercentage) {
+        this.casesPercentage = casesPercentage;
+    }
 
     @Override
     public boolean equals(Object o) {

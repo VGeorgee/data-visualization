@@ -37,6 +37,10 @@ public class DataHandler {
     }
 
     public int getMaxDeaths(){
+        int maxDeaths = 0;
+        for(int i = 0; i < deaths.length; i++){
+
+        }
         return 0; // !TODO
     }
     public int getMaxDeathsOnInterval(int start, int end){
@@ -50,9 +54,17 @@ public class DataHandler {
         return getSumInInterval(cases, countryName, startInterval, endInterval);
     }
 
+    public int getCasesPerMillionPopulation(String countryName) {
+        int sum = getSumInInterval(cases, countryName, startInterval, endInterval);
+        int sumPerMillion = (int) (sum * getPopulationMultiplier(countryName));
+        return sumPerMillion;
+    }
+
+
     public int getCasesOnInterval(String countryName, int start, int end){
         return getSumInInterval(cases, countryName, start, end);
     }
+
     public int getMaxCases(){
         return 0; // !TODO
     }
@@ -64,19 +76,17 @@ public class DataHandler {
     }
 
     public int getVaccinated(String countryName){
-        return getSumInInterval(vaccinated, countryName, 0, endInterval);
+        return getSumInInterval(vaccinated, countryName, 0, vaccinated[0].length - 1);
     }
     public int getVaccinatedOnInterval(String countryName, int start, int end){
         return getSumInInterval(vaccinated, countryName, start, end);
     }
-    public int getMaxVaccinated(){
-        return 0; // !TODO
-    }
-    public int getMaxVaccinatedOnInterval(int start, int end){
-        return 0; // !TODO
-    }
-    public int getVaccinatedWithPeriod(int from){
-        return 0; // !TODO
+
+    public float getVaccinatedPercentage(String countryName){
+        final int vaccinated = getVaccinated(countryName);
+        final int population = getPopulation(countryName);
+
+        return (vaccinated / (float)population) * 100;
     }
 
     private int getSumInInterval(int[][] dataset, String countryName, int start, int end){
@@ -107,11 +117,6 @@ public class DataHandler {
     }
 
 
-    public float getVaccinatedPercentage(String countryName){
-        final int vaccinated = getVaccinated(countryName);
-        final int population = getPopulation(countryName);
-        return (vaccinated / (float)population) * 100;
-    }
 
     private static DataHandler INSTANCE;
     private DataHandler() {

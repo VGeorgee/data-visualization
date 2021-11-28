@@ -59,3 +59,27 @@ void setUnSelectedStroke(PShape shape){
   shape.setStroke(color(Country.UNSELECTED_STROKE));
   shape.setStrokeWeight(2);
 }
+
+void calculateColorOfCountries(){
+  ArrayList<Country> countries = map.getCountries();
+  for(Country country: countries) {
+    float percentage = (float)country.getCasesPercentage();
+    println(percentage);
+    country.setColour(mapCasesColor(percentage));
+  }
+}
+
+float casesRange = 30.0;
+color mapCasesColor(float percentage){
+   if(percentage > casesRange){
+    int red = 255;
+    int green = (int) map(percentage, casesRange, 100, 255, 0);
+    int blue = 0;
+    return color(red, green, blue);
+  } else {
+    int red = 0;
+    int green = 255;
+    int blue = (int) map(percentage, casesRange, 0, 128, 255);
+    return color(red, green, blue);
+  }
+}

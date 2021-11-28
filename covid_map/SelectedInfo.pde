@@ -21,7 +21,17 @@ final int VACCINATION_RECT_MAX_LENGTH = (INFO_WIDTH / 5) * 2;
 final int COUNTRY_ID_GAP = 15;
 
 final int DEATH_TEXT_START = IDStart + COUNTRY_ID_GAP + 10;
-final int DEATH_INTERVAL = 20;
+
+int DEATH_INTERVAL = 20;
+
+int getDeathInterval(){
+  return DEATH_INTERVAL;
+}
+
+void setDeathInterval(int deathInterval){
+  DEATH_INTERVAL = deathInterval;
+}
+
 
 int MAX_DEATHS = 0;
 
@@ -102,7 +112,7 @@ void drawInfoText(){
   text("DEATHS", INFO_COUNTRY_START + TextStart * 6, INFO_COUNTRY_HEIGHT);
   textSize(14);
   text("% adult population fully vaccinated", INFO_COUNTRY_START + TextStart * 2, INFO_COUNTRY_HEIGHT *2);
-  text("per 1 million population", INFO_COUNTRY_START + TextStart * 6, INFO_COUNTRY_HEIGHT * 2);
+  text("per 1 million population, " + getDeathInterval() + " day period", INFO_COUNTRY_START + TextStart * 6, INFO_COUNTRY_HEIGHT * 2);
 }
 
 
@@ -137,3 +147,27 @@ color mapDeathsColor(int deaths){
     return color(red, green, blue);
   }
 }
+
+
+
+
+
+
+
+int infoSliderValue = 1;
+GSlider infoSlider;
+void setUpSlider(){
+  infoSlider = new GSlider(this, INFO_X,INFO_HEIGHT -40, INFO_WIDTH, 50, 30);
+  infoSlider.setEnabled(true);
+  infoSlider.setLimits(1, 50);
+  //infoSlider.setValueI(1);
+}
+
+void checkInfoSlider(){
+ if(infoSliderValue != infoSlider.getValueI()){
+    infoSliderValue = infoSlider.getValueI();
+    setDeathInterval(infoSliderValue);
+    //countriesData.setInterval(0, sliderValue);
+  }
+}
+ 

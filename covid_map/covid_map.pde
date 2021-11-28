@@ -35,10 +35,6 @@ void setup() {
  // countriesData = new Countries("all_cases_2.csv");
 
   slider = new GSlider(this, 0, 700, 500, 50, 30);
-  GOption option = new GOption(this, 0, 500, 700, 50);
-  option.setEnabled(true);
-  GOption option2 = new GOption(this, 0, 550, 700, 50);
-  GOption option3 = new GOption(this, 0, 600, 700, 50);
   
   dataHandler = DataHandler.getInstance();
   final String path = "D://GIT//Processing//data-visualization//covid_map//datasets//";
@@ -48,11 +44,11 @@ void setup() {
     path + "vaccinations.csv",
     path + "population.csv"
   );
-
-  gg.addControls(option, option2, option3);
+  calculateColorOfCountries();
 
   slider.setEnabled(true);
-  slider.setLimits(0, 255);
+  slider.setLimits(0, 675);
+  setUpSlider();
 }
 
 int sliderValue = 0;
@@ -62,7 +58,9 @@ void draw() {
   drawCountries();
   if(sliderValue != slider.getValueI()){
     sliderValue = slider.getValueI();
-    //countriesData.setInterval(0, sliderValue);
+    map.setInterval(sliderValue, 670);
+    calculateColorOfCountries();
   }
+  checkInfoSlider();
   drawSelectedInfo();
 }

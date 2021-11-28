@@ -50,8 +50,36 @@ public class Map {
 
     public void setInterval(int start, int end){
         dataHandler.setInterval(start, end);
+        int maxNumberOfCases = 0;
+        int minNumberOfCases = 500_000_000;
         for(Country country: this.countryList) {
+            int cases = dataHandler.getCasesPerMillionPopulation(country.getName());
+            if(maxNumberOfCases < cases){
+                maxNumberOfCases = cases;
+            }
+            if(minNumberOfCases > cases){
+                minNumberOfCases = cases;
+            }
+            //country.setColour();
+        }
 
+        int interval = maxNumberOfCases - minNumberOfCases;
+
+        System.out.println("INTERVAL: " + maxNumberOfCases + " .. "+ minNumberOfCases +" .. kivonat: " + (maxNumberOfCases - minNumberOfCases));
+        for(Country country: this.countryList) {
+            int cases = dataHandler.getCasesPerMillionPopulation(country.getName());
+
+            System.out.println("CASES: " + cases);
+
+            double percentage =  ((double)(cases - minNumberOfCases) / interval) * 100;
+            if(Double.isNaN(percentage)){
+                percentage = 0.0;
+            }
+            if(Double.isInfinite(percentage)){
+                percentage = 100.0;
+            }
+            System.out.println("PERCENTAGE: " + percentage);
+            country.setCasesPercent(percentage);
         }
     }
 
