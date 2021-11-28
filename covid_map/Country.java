@@ -1,6 +1,10 @@
 public class Country {
     private Object shape;
     private String name;
+
+
+
+    private String ID;
     private boolean isSelected;
     private boolean isHover;
     private int colour;
@@ -14,10 +18,15 @@ public class Country {
     public Country(Object shape, String name) {
         this.shape = shape;
         this.name = name;
+        this.ID = Mapper.getInstance().getCountryID(name);
     }
 
     public String getName(){
         return name;
+    }
+
+    public String getID() {
+        return ID;
     }
 
     public void setSelected(boolean selected) {
