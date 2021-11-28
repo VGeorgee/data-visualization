@@ -1,21 +1,41 @@
-final int INFO_X = 700;
+
 final int INFO_Y = 0;
 final int INFO_WIDTH = 500;
-final int INFO_HEIGHT = 800;
+final int INFO_X = 700;
+final int INFO_HEIGHT = 850;
 final color INFO_STROKE = color(236, 217, 198);
 
 final int INFO_COUNTRY_HEIGHT = 20;
 final int INFO_COUNTRY_START = INFO_X ;
 
-int MAX_DEATHS = 100;
+final int IDStart = INFO_COUNTRY_START + INFO_WIDTH / 2;;
+final int IDEnd = INFO_COUNTRY_HEIGHT;
+final int COUNTRY_OFFSET_FROM_TOP = 30;
+
+final int INFO_LEFT_GAP = 10;
+final int vaccinationRectStart = INFO_COUNTRY_START + INFO_LEFT_GAP;
+//int vaccinationRectEnd = INFO_COUNTRY_START + INFO_LEFT_GAP;
+
+final int VACCINATION_RECT_MAX_LENGTH = (INFO_WIDTH / 5) * 2;
+
+final int COUNTRY_ID_GAP = 15;
+
+final int DEATH_TEXT_START = IDStart + COUNTRY_ID_GAP + 10;
+final int DEATH_INTERVAL = 20;
+
+int MAX_DEATHS = 0;
 
 void drawSelectedInfo(){
   textAlign(CENTER);
   drawInfoBorder();
   ArrayList<Country> selected = Selector.getInstance().getSelected();
   drawInfoText();
+  MAX_DEATHS = 0;
   for(int i = 0; i < selected.size(); i++) {
-    MAX_DEATHS = 100;
+    int deaths = dataHandler.getDeathsPerMillionPopulation(selected.get(i).getName(), DEATH_INTERVAL);
+    if(deaths > MAX_DEATHS){
+      MAX_DEATHS = deaths;
+    }
   }
   
   for(int i = 0; i < selected.size(); i++) {
@@ -31,15 +51,6 @@ void drawInfoBorder(){
 }
 
 
-int IDStart = INFO_COUNTRY_START + INFO_WIDTH / 2;;
-int IDEnd = INFO_COUNTRY_HEIGHT;
-int COUNTRY_OFFSET_FROM_TOP = 30;
-
-int INFO_LEFT_GAP = 10;
-int vaccinationRectStart = INFO_COUNTRY_START + INFO_LEFT_GAP;
-//int vaccinationRectEnd = INFO_COUNTRY_START + INFO_LEFT_GAP;
-
-final int VACCINATION_RECT_MAX_LENGTH = (INFO_WIDTH / 5) * 2;
 
 void drawCountryInfo(Country country, int nth){
   textSize(10);
@@ -54,22 +65,31 @@ void drawCountryInfo(Country country, int nth){
 }
 
 void drawVaccinationRect(Country country, int nth){
-  color vaccinationColor = mapVaccinationPercentageColor(90);
+  float vaccinationPercent = dataHandler.getVaccinatedPercentage(country.getName());
+  color vaccinationColor = mapVaccinationPercentageColor(vaccinationPercent);
   fill(vaccinationColor);
-  final int rectWidth = (int) map(100, 0, 100, 0, VACCINATION_RECT_MAX_LENGTH);
+  final int rectWidth = (int) map(vaccinationPercent, 0, 100, 0, VACCINATION_RECT_MAX_LENGTH);
   
-  rect(IDStart - 15 , IDEnd * nth + COUNTRY_OFFSET_FROM_TOP / 2,  -rectWidth, INFO_COUNTRY_HEIGHT );
+  rect(IDStart - COUNTRY_ID_GAP, IDEnd * nth + COUNTRY_OFFSET_FROM_TOP / 2,  -rectWidth, INFO_COUNTRY_HEIGHT );
+  
+  
+  fill(0);
+  final int deathsTextStart = DEATH_TEXT_START + rectWidth;
+  text((int)vaccinationPercent, IDStart - COUNTRY_ID_GAP - 10 - rectWidth,  IDEnd * nth + COUNTRY_OFFSET_FROM_TOP / 2 + 15);
   
   fill(0);
 }
 
 void drawDeathsRect(Country country, int nth){
-  int deaths = 30;
+  int deaths = dataHandler.getDeathsPerMillionPopulation(country.getName(), DEATH_INTERVAL);
   color deathsColor = mapDeathsColor(deaths);
   fill(deathsColor);
-  final int rectWidth = (int) map(deaths, 0, 100, 0, VACCINATION_RECT_MAX_LENGTH);
+  final int rectWidth = (int) map(deaths, 0, MAX_DEATHS, 0, VACCINATION_RECT_MAX_LENGTH);
+  rect(IDStart + COUNTRY_ID_GAP, IDEnd * nth + COUNTRY_OFFSET_FROM_TOP / 2,  rectWidth, INFO_COUNTRY_HEIGHT );
   
-  rect(IDStart + 18 , IDEnd * nth + COUNTRY_OFFSET_FROM_TOP / 2,  rectWidth, INFO_COUNTRY_HEIGHT );
+  fill(0);
+  final int deathsTextStart = DEATH_TEXT_START + rectWidth;
+  text(deaths, deathsTextStart,  IDEnd * nth + COUNTRY_OFFSET_FROM_TOP / 2 + 15);
   
   fill(0);
 }
@@ -101,18 +121,19 @@ color mapVaccinationPercentageColor(float percentage){
   }
 }
 
+float deathRange = 30.0;
 color mapDeathsColor(int deaths){
-  println(deaths + " " + MAX_DEATHS + " " +  (deaths / (float)MAX_DEATHS));
+  //println(deaths + " " + MAX_DEATHS + " " +  (deaths / (float)MAX_DEATHS));
   float deathsPercentage = (deaths / (float)MAX_DEATHS) * 100.0;
-   if(deathsPercentage > 70.0){
+   if(deathsPercentage > deathRange){
     int red = 255;
-    int green = (int) map(deathsPercentage, 70, 0, 255, 0);
+    int green = (int) map(deathsPercentage, deathRange, 100, 255, 0);
     int blue = 0;
     return color(red, green, blue);
   } else {
     int red = 0;
     int green = 255;
-    int blue = (int) map(deathsPercentage, 70, 100, 128, 255);
+    int blue = (int) map(deathsPercentage, deathRange, 0, 128, 255);
     return color(red, green, blue);
   }
 }

@@ -1,4 +1,3 @@
-import javax.xml.crypto.Data;
 
 public class DataHandler {
     private int [][] cases;
@@ -25,6 +24,12 @@ public class DataHandler {
 
     public int getDeaths(String countryName) {
         return getSumInInterval(deaths, countryName, 0, endInterval);
+    }
+
+    public int getDeathsPerMillionPopulation(String countryName, int interval){
+        int sum = getSumInInterval(deaths, countryName, endInterval - interval, endInterval);
+        int sumPerMillion = (int) (sum * getPopulationMultiplier(countryName));
+        return sumPerMillion;
     }
 
     public int getDeathsOnInterval(String countryName, int start){

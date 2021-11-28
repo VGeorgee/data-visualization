@@ -7,6 +7,7 @@ int OFFSET_Y = -100;
 
 Map map;
 Selector selector;
+DataHandler dataHandler;
 
 GSlider slider;
 
@@ -38,6 +39,15 @@ void setup() {
   option.setEnabled(true);
   GOption option2 = new GOption(this, 0, 550, 700, 50);
   GOption option3 = new GOption(this, 0, 600, 700, 50);
+  
+  dataHandler = DataHandler.getInstance();
+  final String path = "D://GIT//Processing//data-visualization//covid_map//datasets//";
+  dataHandler.loadData(
+    path + "cases.csv",
+    path + "deaths.csv",
+    path + "vaccinations.csv",
+    path + "population.csv"
+  );
 
   gg.addControls(option, option2, option3);
 
