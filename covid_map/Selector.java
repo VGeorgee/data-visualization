@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Selector {
     private ArrayList<Country> selected;
@@ -12,6 +13,7 @@ public class Selector {
             country.setSelected(true);
             selected.add(country);
         }
+        Collections.sort(selected);
     }
 
     public void remove(Country country){
@@ -19,6 +21,7 @@ public class Selector {
             country.setSelected(false);
             selected.remove(country);
         }
+        Collections.sort(selected);
     }
 
     private Selector(){

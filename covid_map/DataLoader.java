@@ -55,7 +55,7 @@ public class DataLoader {
         };
         final int headerLocation = 0;
         final int headerDate = 2;
-        final int headerVaccinations = 3;
+        final int headerVaccinations = 5;
 
         final Mapper mapper = Mapper.getInstance();
         Scanner scanner;

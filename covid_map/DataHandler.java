@@ -24,11 +24,11 @@ public class DataHandler {
     }
 
     public int getDeaths(String countryName) {
-        return getSumInInterval(deaths, countryName, startInterval, endInterval);
+        return getSumInInterval(deaths, countryName, 0, endInterval);
     }
 
-    public int getDeathsOnInterval(String countryName, int start, int end){
-        return getSumInInterval(deaths, countryName, start, end);
+    public int getDeathsOnInterval(String countryName, int start){
+        return getSumInInterval(deaths, countryName, endInterval - start, endInterval);
     }
 
     public int getMaxDeaths(){
@@ -59,7 +59,7 @@ public class DataHandler {
     }
 
     public int getVaccinated(String countryName){
-        return getSumInInterval(vaccinated, countryName, startInterval, endInterval);
+        return getSumInInterval(vaccinated, countryName, 0, endInterval);
     }
     public int getVaccinatedOnInterval(String countryName, int start, int end){
         return getSumInInterval(vaccinated, countryName, start, end);
@@ -85,7 +85,7 @@ public class DataHandler {
             return 0;
         }
         final int[] countryData = dataset[indexOfCountry];
-        final int sum = countryData[start] -  countryData[end];
+        final int sum = countryData[end] -  countryData[start];
         return sum;
     }
 
@@ -97,13 +97,21 @@ public class DataHandler {
         }
         return population[countryIndex];
     }
-    public int getPopulationMultiplier(String countryName){
-        return 1_000_000 / getPopulation(countryName);
+    public float getPopulationMultiplier(String countryName){
+        return 1_000_000.0f / getPopulation(countryName);
+    }
+
+
+    public float getVaccinatedPercentage(String countryName){
+        final int vaccinated = getVaccinated(countryName);
+        final int population = getPopulation(countryName);
+        return (vaccinated / (float)population) * 100;
     }
 
     private static DataHandler INSTANCE;
     private DataHandler() {
         mapper = Mapper.getInstance();
+        setInterval(0, 675);
     }
     public static DataHandler getInstance(){
         if(INSTANCE == null){

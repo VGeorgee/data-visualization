@@ -1,4 +1,4 @@
-public class Country {
+public class Country implements Comparable<Country>{
     private Object shape;
     private String name;
 
@@ -69,5 +69,11 @@ public class Country {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @Override
+    public int compareTo(Country country) {
+        DataHandler dataHandler = DataHandler.getInstance();
+        return (int) -((dataHandler.getVaccinatedPercentage(this.name) - dataHandler.getVaccinatedPercentage(country.name)) * 100);
     }
 }
