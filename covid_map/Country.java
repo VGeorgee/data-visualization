@@ -9,7 +9,7 @@ public class Country {
     static final int HOVER_BACKGROUND = 0xCC80AAFF;
     //static final int UNHOVER_BACKGROUND = 0xCC80AAFF;
     static final int SELECTED_STROKE = 0xCC00CCFF;
-    static final int UNSELECTED_STROKE = 0xFFFFFFFF;
+    static final int UNSELECTED_STROKE = 0xAAAAAAAA;
 
     public Country(Object shape, String name) {
         this.shape = shape;
@@ -24,27 +24,28 @@ public class Country {
         this.isSelected = selected;
     }
 
+    public void setHover(boolean hover){
+        this.isHover = hover;
+    }
+
     public void setColour(int colour){
         this.colour = colour;
     }
 
-    public void draw(){
-         /*
-        if(isSelected){
-            shape.setStroke(SELECTED_STROKE);
-        } else {
-            shape.setStroke(UNSELECTED_STROKE);
-        }
-        if(isHover){
-            shape.setFill(HOVER_BACKGROUND);
-        } else {
-            shape.setFill(colour);
-        }
-         // */
-    }
-
     public boolean isSelected(){
         return isSelected;
+    }
+
+    public boolean isHover(){
+        return isHover;
+    }
+
+    public int getColour(){
+        return colour;
+    }
+
+    public Object getShape(){
+        return shape;
     }
 
 

@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,23 +33,17 @@ public class Map {
         }
     }
 
-
-    public void draw(){
-        // /*
-        for(Country shape: countryList){
-            shape.draw();
-        }
-        // */
+    public ArrayList<Country> getCountries(){
+        return countryList;
     }
 
-    public void loadMap(String fileName){
-        /*
-       PShape map = loadShape(fileName);
-       for(int i = 0; i < map.getChildCount(); i++) {
-            PShape child = map.getChild(i);
-           Country country = new Country(child, child.getName());
-           shapeList.add(country);
-           shapeMap.put(country.getName(), country);
+
+    public void loadMap(Object[] shapes, String[] names){
+        // /*
+       for(int i = 0; i < shapes.length; i++) {
+           Country country = new Country(shapes[i], names[i]);
+           countryList.add(country);
+           countryMap.put(country.getName(), country);
         }
         //*/
     }
