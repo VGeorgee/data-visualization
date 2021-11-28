@@ -17,7 +17,7 @@ public class DataLoader {
             return new int[1][1];
         }
 
-        final int[][] result = new int[39][MAX_NUMBER_OF_DATA];
+        final int[][] result = new int[NUMBER_OF_COUNTRIES][MAX_NUMBER_OF_DATA];
 
         String[] header = scanner.nextLine().split(",");
         while(scanner.hasNextLine()){
@@ -33,15 +33,67 @@ public class DataLoader {
 
         return result;
     }
-    /*
-    static int[][] loadDeaths(String fileName){
-        final Mapper mapper = Mapper.getInstance();
-        return new int[1][1];
-    }*/
 
     static int[][] loadVaccinations(String fileName){
+        final String[] header = new String[]{
+                "location",
+                "iso_code",
+                "date",
+                "total_vaccinations",
+                "people_vaccinated",
+                "people_fully_vaccinated",
+                "total_boosters",
+                "daily_vaccinations_raw",
+                "daily_vaccinations",
+                "total_vaccinations_per_hundred",
+                "people_vaccinated_per_hundred",
+                "people_fully_vaccinated_per_hundred",
+                "total_boosters_per_hundred",
+                "daily_vaccinations_per_million",
+                "daily_people_vaccinated",
+                "daily_people_vaccinated_per_hundred"
+        };
+        final int headerLocation = 0;
+        final int headerDate = 2;
+        final int headerVaccinations = 3;
+
         final Mapper mapper = Mapper.getInstance();
-        return new int[1][1];
+        Scanner scanner;
+        try{
+            final File file = new File(fileName);
+            scanner = new Scanner(file);
+        } catch (Exception ex){
+            System.out.println(ex.toString());
+            return new int[1][1];
+        }
+
+        final int[][] result = new int[NUMBER_OF_COUNTRIES][MAX_NUMBER_OF_DATA];
+
+        scanner.nextLine();
+        int indexOfDate = 0;
+        int indexOfCountry = 0;
+        while(scanner.hasNextLine()){
+            String[] tokens = parseLine(scanner.nextLine());
+            indexOfCountry = mapper.countryIndex(tokens[headerLocation]);
+            indexOfDate = mapper.dateIndex(tokens[headerDate]);
+
+            if(!tokens[headerVaccinations].equals("")){
+                result[indexOfCountry][indexOfDate] = Integer.parseInt(tokens[headerVaccinations]);
+            } else {
+                result[indexOfCountry][indexOfDate] = result[indexOfCountry][indexOfDate - 1];
+            }
+        }
+
+        for(int i = 0; i < NUMBER_OF_COUNTRIES; i++){
+            fillEndOfArray(result[i]);
+        }
+/*
+        while(indexOfDate < MAX_NUMBER_OF_DATA){
+            result[indexOfCountry][indexOfDate] = result[indexOfCountry][indexOfDate - 1];
+            indexOfDate++;
+        }
+*/
+        return result;
     }
     static int[] loadPopulation(String fileName){
         final Mapper mapper = Mapper.getInstance();
@@ -72,5 +124,13 @@ public class DataLoader {
         }
         result[resultSize++] = "";
         return result;
+    }
+
+    static void fillEndOfArray(int[] array){
+        int i = array.length - 1;
+        while(array[i] == 0) i--;
+        while(++i < array.length){
+            array[i] = array[i - 1];
+        }
     }
 }
