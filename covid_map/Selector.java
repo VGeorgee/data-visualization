@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Selector {
@@ -9,11 +8,17 @@ public class Selector {
     }
 
     public void add(Country country){
-        selected.add(country);
+        if(!selected.contains(country)){
+            country.setSelected(true);
+            selected.add(country);
+        }
     }
 
     public void remove(Country country){
-        selected.remove(country);
+        if(selected.contains(country)) {
+            country.setSelected(false);
+            selected.remove(country);
+        }
     }
 
     private Selector(){
