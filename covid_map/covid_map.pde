@@ -1,6 +1,5 @@
 import g4p_controls.*;
 
-import g4p_controls.*;
 
 int OFFSET_X = -200;
 int OFFSET_Y = -100;
