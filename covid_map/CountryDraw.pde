@@ -3,11 +3,12 @@
 void drawCountries(){
   ArrayList<Country> countries = map.getCountries();
   //println(countries.size());
+  Country hovered = null;
   for(Country country: countries){
       PShape countryShape = (PShape) country.getShape();
       
       boolean isHovered = countryShape.contains(getMouseX(), getMouseY());
-      
+
       country.setHover(isHovered);
       
       if(isMouseClicked() && isHovered){
@@ -23,12 +24,17 @@ void drawCountries(){
       setCountryStroke(country);
         
         
-        if(country.isHover()){
-          countryShape.setFill(color(Country.HOVER_BACKGROUND));
-        } else {
-          countryShape.setFill(color(country.getColour()));
-        }
-        shape(countryShape, OFFSET_X, OFFSET_Y);
+     if(country.isHover()){
+       countryShape.setFill(color(Country.HOVER_BACKGROUND));
+       hovered = country;
+     } else {
+       countryShape.setFill(color(country.getColour()));
+     }
+     shape(countryShape, OFFSET_X, OFFSET_Y);
+  }
+  
+  if(hovered != null){
+    showInfoTab(hovered);
   }
 }
    private int getMouseX(){
