@@ -36,7 +36,7 @@ void setup() {
   slider = new GSlider(this, 0, 700, 500, 50, 30);
   
   dataHandler = DataHandler.getInstance();
-  final String path = "D://GIT//Processing//data-visualization//covid_map//datasets//";
+  final String path = "/Users/gyorgyvereb/egyetem/data-visualization/covid_map/datasets/";
   dataHandler.loadData(
     path + "cases.csv",
     path + "deaths.csv",
@@ -46,18 +46,18 @@ void setup() {
   calculateColorOfCountries();
 
   slider.setEnabled(true);
-  slider.setLimits(0, 675);
+  slider.setLimits(0, 500);
   setUpSlider();
 }
 
 int sliderValue = 0;
 
 void draw() {
-  background(255);
+  background(INFO_STROKE);
   drawCountries();
   if(sliderValue != slider.getValueI()){
     sliderValue = slider.getValueI();
-    map.setInterval(sliderValue, 670);
+    map.setInterval(1, sliderValue);
     calculateColorOfCountries();
   }
   checkInfoSlider();

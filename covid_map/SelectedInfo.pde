@@ -63,14 +63,16 @@ void drawInfoBorder(){
 
 
 void drawCountryInfo(Country country, int nth){
-  textSize(10);
   int TextStart = INFO_WIDTH / 16;
   //text(country.getID(), INFO_COUNTRY_START + TextStart * 8, (INFO_COUNTRY_HEIGHT) * nth + 30);
+  if(country.isHover()){
+    textSize(16);
+  } else textSize(10);
   text(country.getID(), IDStart, IDEnd * nth + COUNTRY_OFFSET_FROM_TOP);
   drawVaccinationRect(country, nth);
   drawDeathsRect(country, nth);
   
-
+textSize(10);
   
 }
 
@@ -111,7 +113,7 @@ void drawInfoText(){
   text("VACCINATION", INFO_COUNTRY_START + TextStart * 2, INFO_COUNTRY_HEIGHT);
   text("DEATHS", INFO_COUNTRY_START + TextStart * 6, INFO_COUNTRY_HEIGHT);
   textSize(14);
-  text("% adult population fully vaccinated", INFO_COUNTRY_START + TextStart * 2, INFO_COUNTRY_HEIGHT *2);
+  text("% population fully vaccinated", INFO_COUNTRY_START + TextStart * 2, INFO_COUNTRY_HEIGHT *2);
   text("per 1 million population, " + getDeathInterval() + " day period", INFO_COUNTRY_START + TextStart * 6, INFO_COUNTRY_HEIGHT * 2);
 }
 
@@ -159,7 +161,7 @@ GSlider infoSlider;
 void setUpSlider(){
   infoSlider = new GSlider(this, INFO_X,INFO_HEIGHT -40, INFO_WIDTH, 50, 30);
   infoSlider.setEnabled(true);
-  infoSlider.setLimits(1, 50);
+  infoSlider.setLimits(1, 100);
   //infoSlider.setValueI(1);
 }
 
@@ -167,6 +169,10 @@ void checkInfoSlider(){
  if(infoSliderValue != infoSlider.getValueI()){
     infoSliderValue = infoSlider.getValueI();
     setDeathInterval(infoSliderValue);
+    /*
+    map.setInterval(sliderValue, sliderValue + infoSliderValue);
+    calculateColorOfCountries();
+    */
     //countriesData.setInterval(0, sliderValue);
   }
 }

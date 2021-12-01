@@ -27,6 +27,12 @@ public class DataHandler {
     }
 
     public int getDeathsPerMillionPopulation(String countryName, int interval){
+        int sum = getSumInInterval(deaths, countryName, (deaths[0].length - 1) - interval, deaths[0].length - 1);
+        int sumPerMillion = (int) (sum * getPopulationMultiplier(countryName));
+        return sumPerMillion;
+    }
+
+    public int getDeathsPerMillionPopulationOld(String countryName, int interval){
         int sum = getSumInInterval(deaths, countryName, endInterval - interval, endInterval);
         int sumPerMillion = (int) (sum * getPopulationMultiplier(countryName));
         return sumPerMillion;

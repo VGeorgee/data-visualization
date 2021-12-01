@@ -13,7 +13,7 @@ public class Country implements Comparable<Country>{
 
     static final int HOVER_BACKGROUND = 0xCC80AAFF;
     //static final int UNHOVER_BACKGROUND = 0xCC80AAFF;
-    static final int SELECTED_STROKE = 0xCC00CCFF;
+    static final int SELECTED_STROKE = 0xFF0000FF;
     static final int UNSELECTED_STROKE = 0xAAAAAAAA;
 
     public Country(Object shape, String name) {

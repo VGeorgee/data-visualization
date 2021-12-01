@@ -4,10 +4,12 @@ public class Mapper {
     private HashMap<String, Integer> dates;
     private HashMap<String, Integer> countries;
     private HashMap<String, String> countryIDs;
+    private HashMap<Integer, String> reverseDate;
 
     int dateIndex(String date) {
         if(!dates.containsKey(date)){
             dates.put(date, dates.size());
+            reverseDate.put(dates.size() - 1, date);
         }
         return dates.get(date);
     }
@@ -18,6 +20,10 @@ public class Mapper {
         return countries.get(countryName);
     }
 
+    String getDate(int day) {
+        return reverseDate.get(day);
+    }
+
     String getCountryID(String name){
         return countryIDs.get(name);
     }
@@ -25,6 +31,7 @@ public class Mapper {
     int getDateSize(){
         return dates.size();
     }
+
     int getCountriesSize(){
         return countries.size();
     }
@@ -35,6 +42,7 @@ public class Mapper {
     private Mapper(){
         dates = new HashMap<>();
         countries = new HashMap<>();
+        reverseDate = new HashMap<>();
         dates.put("PlaceHolder", 0);
         countryIDs = new HashMap<>();countryIDs.put("Albania", "ALB");
         countryIDs.put("Andorra","AND");

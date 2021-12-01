@@ -36,6 +36,9 @@ void drawCountries(){
   if(hovered != null){
     showInfoTab(hovered);
   }
+
+  //Mapper mapper = Mapper.getInstance();
+  //text(mapper.getDate(0) + " - " +mapper.getDate(sliderValue), 200, 200);
 }
    private int getMouseX(){
         return mouseX - OFFSET_X;
@@ -77,14 +80,14 @@ void calculateColorOfCountries(){
 float casesRange = 30.0;
 color mapCasesColor(float percentage){
    if(percentage > casesRange){
-    int red = 255;
-    int green = (int) map(percentage, casesRange, 100, 255, 0);
+    int red = (int) map(percentage, casesRange, 100, 255, 0);;
+    int green = 0;
     int blue = 0;
     return color(red, green, blue);
   } else {
     int red = 0;
-    int green = 255;
-    int blue = (int) map(percentage, casesRange, 0, 128, 255);
+    int green = (int) map(percentage, casesRange, 0, 128, 255);
+    int blue = 0;
     return color(red, green, blue);
   }
 }
