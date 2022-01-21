@@ -4,6 +4,10 @@ import g4p_controls.*;
 int OFFSET_X = -200;
 int OFFSET_Y = -100;
 
+int SLIDER_X = 0;
+int SLIDER_Y = 700;
+int SLIDER_LENGTH = 500;
+
 Map map;
 Selector selector;
 DataHandler dataHandler;
@@ -33,7 +37,7 @@ void setup() {
   // new Map("europe.svg", OFFSET_X, OFFSET_Y);
  // countriesData = new Countries("all_cases_2.csv");
 
-  slider = new GSlider(this, 0, 700, 500, 50, 30);
+  slider = new GSlider(this, SLIDER_X, SLIDER_Y, SLIDER_LENGTH, 50, 30);
   
   dataHandler = DataHandler.getInstance();
   final String path = "/Users/gyorgyvereb/egyetem/data-visualization/covid_map/datasets/";
@@ -48,6 +52,7 @@ void setup() {
   slider.setEnabled(true);
   slider.setLimits(0, 500);
   setUpSlider();
+  initLerp();
 }
 
 int sliderValue = 0;
@@ -62,4 +67,6 @@ void draw() {
   }
   checkInfoSlider();
   drawSelectedInfo();
+
+  drawInfo();
 }
