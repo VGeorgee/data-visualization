@@ -1,7 +1,5 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class FileReader {
@@ -9,6 +7,7 @@ public class FileReader {
     public static List<FileEntry> readFile(String fileName) {
         try{
             File file = new File(fileName);
+            //Scanner sc = new Scanner(new FileInputStream(file), "utf-8");
             Scanner sc = new Scanner(new FileInputStream(file));
             ArrayList<FileEntry> list = new ArrayList<>();
 
@@ -16,28 +15,7 @@ public class FileReader {
 
             while(sc.hasNextLine()){
                 String line = sc.nextLine();
-                String[] tokens = line.split(";");
-                String semester = tokens[5];
-                if(semester.equals("")){
-                    semester = "-1";
-                }
-                String credits = tokens[6];
-                if(credits.equals("")){
-                    credits = "-1";
-                }
-
-                FileEntry fe = new FileEntry(
-                        tokens[0],
-                        tokens[1],
-                        tokens[2],
-                        tokens[3],
-                        tokens[4],
-                        Integer.parseInt(semester),
-                        Integer.parseInt(credits),
-                        tokens[7],
-                        tokens[8],
-                        tokens[9],
-                        tokens[11]);
+                FileEntry fe = convertLineToFileEntry(line);
                 if(fe.scheduleInformation.length() > 0){
                     list.add(fe);
                 }
@@ -47,6 +25,34 @@ public class FileReader {
             System.out.println(ex);
             return null;
         }
+    }
+
+    public static FileEntry convertLineToFileEntry(String line){
+        String[] tokens = line.split(";");
+        String semester = tokens[5];
+        if(semester.equals("")){
+            semester = "-1";
+        }
+        String credits = tokens[6];
+        if(credits.equals("")){
+            credits = "-1";
+        }
+
+        System.out.println(tokens[11]);
+
+        FileEntry fe = new FileEntry(
+                tokens[0],
+                tokens[1],
+                tokens[2],
+                tokens[3],
+                tokens[4],
+                Integer.parseInt(semester),
+                Integer.parseInt(credits),
+                tokens[7],
+                tokens[8],
+                tokens[9],
+                tokens[11]);
+        return fe;
     }
 
 

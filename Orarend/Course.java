@@ -1,8 +1,3 @@
-package entities;
-
-import Types.CourseType;
-
-
 import java.util.Objects;
 
 public class Course {
@@ -13,6 +8,7 @@ public class Course {
     private Day day;
     private Schedule schedule;
     private Curriculum curriculum;
+    private Subject subject;
 
     public Course(String code, CourseType type, Lecturer lecturer, Room room, Day day, Schedule schedule, Curriculum curriculum) {
         this.code = code;
@@ -52,6 +48,13 @@ public class Course {
         return curriculum;
     }
 
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
 
     @Override
     public boolean equals(Object o) {

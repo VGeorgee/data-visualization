@@ -1,8 +1,3 @@
-package entities;
-
-import Types.Enrollment;
-import Types.Requirement;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

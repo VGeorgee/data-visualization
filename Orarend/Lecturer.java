@@ -1,5 +1,3 @@
-package entities;
-
 import java.util.*;
 
 public class Lecturer {

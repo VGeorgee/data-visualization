@@ -1,4 +1,3 @@
-import entities.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +27,14 @@ public class Database {
             INSTANCE = new Database();
         }
         return INSTANCE;
+    }
+
+    public Curriculum getCurriculum(String curriculumName){
+        for(Curriculum curriculum: this.curriculums){
+            if(curriculum.getName().equals(curriculumName)){
+                return curriculum;
+            }
+        }
+        return null;
     }
 }

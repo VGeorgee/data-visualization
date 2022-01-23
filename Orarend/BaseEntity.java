@@ -1,41 +1,40 @@
-package entities;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Room {
-    private String room;
+public class BaseEntity {
+    private String name;
     private List<Course> courses;
 
-    public Room(String room) {
-        this.room = room;
-        this.courses = new ArrayList<>();
+    public BaseEntity(String name) {
+        this.name = name;
+        courses = new ArrayList<>();
     }
 
-    public String getRoom() {
-        return room;
+    public String getName() {
+        return name;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
     }
 
     public void addCourse(Course course){
         this.courses.add(course);
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Room room1 = (Room) o;
-        return room.equals(room1.room);
+        Day day1 = (Day) o;
+        return name.equals(day1.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(room);
+        return Objects.hash(name);
     }
 
-    @Override
-    public String toString() {
-        return room;
-    }
 }

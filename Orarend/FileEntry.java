@@ -46,7 +46,8 @@ public class FileEntry {
         if(tokens.length > 1 && tokens[tokens.length - 1].length() == 4){
             tokens = Arrays.copyOf(tokens, tokens.length - 1);
         }
-        return String.join(" ", tokens);
+        String joined = String.join(" ", tokens);
+        return joined;
     }
 
     public void setLecturers(String lecturers) {

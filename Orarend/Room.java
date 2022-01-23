@@ -1,26 +1,18 @@
-package entities;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Day {
-    private String day;
-
+public class Room {
+    private String room;
     private List<Course> courses;
 
-
-    public Day(String day) {
-        this.day = day;
+    public Room(String room) {
+        this.room = room;
         this.courses = new ArrayList<>();
     }
 
-    public String getDay() {
-        return day;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
+    public String getRoom() {
+        return room;
     }
 
     public void addCourse(Course course){
@@ -31,21 +23,17 @@ public class Day {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Day day1 = (Day) o;
-        return day.equals(day1.day);
+        Room room1 = (Room) o;
+        return room.equals(room1.room);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(day);
+        return Objects.hash(room);
     }
 
     @Override
     public String toString() {
-        return "Day{" +
-                "day='" + day + '\'' +
-                ", courses=" + courses +
-                '}';
+        return room;
     }
 }
-

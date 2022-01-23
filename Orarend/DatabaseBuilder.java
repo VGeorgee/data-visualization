@@ -1,10 +1,3 @@
-import Types.CourseType;
-import Types.Enrollment;
-import Types.Requirement;
-import entities.*;
-
-import javax.xml.crypto.Data;
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +42,9 @@ public class DatabaseBuilder {
             lecturer.addCourse(course);
             day.addCourse(course);
             subject.addCourse(course);
+            course.setSubject(subject);
             room.addCourse(course);
+            curriculum.addCourse(course);
 
             database.courses.add(course);
         }
