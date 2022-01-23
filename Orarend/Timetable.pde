@@ -5,7 +5,7 @@ int CELL_X_MARGIN = 50;
 int CELL_Y_MARGIN = 50;
 
 String[] DAYS = new String[]{"Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek"};
-String[] DAY_IDS = new String[]{"H", "K", "Sz", "Cs", "P"};
+String[] DAY_IDS = new String[]{"H", "K", "SZE", "CS", "P"};
 String[] SCHEDULES = new String[]{"8-10", "10-12", "12-14", "14-16", "16-18", "18-20"};
 String[] SCHEDULE_IDS = new String[]{"8", "10", "12", "14", "16", "18"};
 

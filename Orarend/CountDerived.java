@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class CountDerived implements ICountMapper{
+abstract class CountDerived implements ICountMapper{
     private Map<String, Map<String, Integer>> counts;
     public Map<String, Map<String, Integer>> getCounts(){
         return counts;
@@ -29,6 +29,7 @@ public abstract class CountDerived implements ICountMapper{
                 counts.put(key, new HashMap<>());
             }
             this.increment(counts.get(key), dataMapper(course));
+            this.increment(counts.get(key), "sum");
         }
     }
 
@@ -48,16 +49,15 @@ public abstract class CountDerived implements ICountMapper{
     public abstract String dataMapper(Course course);
     public abstract String keyMapper(Course course);
 
-    @Override
-    public Map<String, Map<String, Integer>> getCountedData() {
-        return this.counts;
+    public void increment(Map<String, Integer> map, String key){
+        this.incrementBy(map, key, 1);
     }
 
-    public void increment(Map<String, Integer> map, String key){
+    public void incrementBy(Map<String, Integer> map, String key, int by){
         if(!map.containsKey(key)){
             map.put(key, 0);
         }
-        int value = map.get(key) + 1;
+        int value = map.get(key) + by;
         map.replace(key, value);
     }
 
@@ -65,6 +65,116 @@ public abstract class CountDerived implements ICountMapper{
     public String toString() {
         return "CourseTypeByLecturer{" +
                 "courseTypeCount=" + counts +
-                '}';
+                "} => " + counts.get("sum");
+    }
+}
+
+
+class CurriculumByLecturer extends CountDerived{
+
+    public CurriculumByLecturer(List<Course> courses) {
+        this.build(courses);
+    }
+
+    @Override
+    public String dataMapper(Course course) {
+        return course.getCurriculum().getName();
+    }
+
+    @Override
+    public String keyMapper(Course course) {
+        return course.getLecturer().getName();
+    }
+
+    @Override
+    public String getEntityKey() {
+        return "Curriculum";
+    }
+}
+
+
+class CurriculumBySchedule extends CountDerived {
+    @Override
+    public String dataMapper(Course course) {
+        return course.getCurriculum().getName();
+    }
+
+    @Override
+    public String keyMapper(Course course) {
+        return course.getDay().getName() + course.getSchedule().getStart();
+    }
+
+    public CurriculumBySchedule(List<Course> courses) {
+        this.build(courses);
+    }
+
+    @Override
+    public String getEntityKey() {
+        return "Curriculum";
+    }
+}
+
+class CourseTypeByLecturer extends CountDerived {
+    public CourseTypeByLecturer(List<Course> courses) {
+        this.filteredBuild(courses);
+    }
+
+    @Override
+    public String dataMapper(Course course) {
+        return course.getType().name();
+    }
+
+    @Override
+    public String keyMapper(Course course) {
+        return course.getLecturer().getName();
+    }
+
+    @Override
+    public String getEntityKey() {
+        return "CourseType";
+    }
+}
+
+
+class SubjectByLecturer extends CountDerived {
+    public SubjectByLecturer(List<Course> courses) {
+        this.build(courses);
+    }
+
+    @Override
+    public String dataMapper(Course course) {
+        return course.getSubject().getName();
+    }
+
+    @Override
+    public String keyMapper(Course course) {
+        return course.getLecturer().getName();
+    }
+
+    @Override
+    public String getEntityKey() {
+        return "Subject";
+    }
+}
+
+class CourseTypeBySchedule extends CountDerived {
+
+    public CourseTypeBySchedule(List<Course> courses) {
+        this.filteredBuild(courses);
+    }
+
+    @Override
+    public String dataMapper(Course course) {
+        return course.getType().name();
+    }
+
+    @Override
+    public String keyMapper(Course course) {
+        return course.getDay().getName() + course.getSchedule().getStart();
+    }
+
+    @Override
+    public String getEntityKey() {
+        return "CourseType";
     }
 }

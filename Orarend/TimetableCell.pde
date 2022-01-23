@@ -1,10 +1,11 @@
-
+import java.util.Map;
 int CELL_HEIGHT = 80;
 int CELL_WIDTH = 200;
 
 color CELL_STROKE_COLOR = color(0);
 color CELL_FILL_COLOR = color(245, 239, 66);
-int STROKE_WEIGHT = 1;
+int CELL_STROKE_WEIGHT = 2;
+int SUBCELL_STROKE_WEIGHT = 0;
 
 class TimetableCell {
     int x;
@@ -22,9 +23,11 @@ class TimetableCell {
 
     public void draw(){
         stroke(CELL_STROKE_COLOR);
-        strokeWeight(STROKE_WEIGHT);
+        strokeWeight(CELL_STROKE_WEIGHT);
         fill(CELL_FILL_COLOR);
         rect(this.x, this.y, CELL_WIDTH, CELL_HEIGHT);
+
+        this.showData();
     }
 
     public boolean isHovered(){
@@ -34,6 +37,40 @@ class TimetableCell {
     public String toString(){
         return this.day + " " + this.schedule;
     }
+
+    private String getKey(){
+        return this.day + this.schedule;
+    }
+
+
+    public void showData(){
+        Map<String, Integer> cellData = selectedDataset.getCount(this.getKey());
+        
+        strokeWeight(SUBCELL_STROKE_WEIGHT);
+        if(cellData != null){
+            int subRectX = this.x;
+            int subRectY = this.y;
+            int sumOfCell = cellData.get("sum");
+            for(Map.Entry<String, Integer> entry: cellData.entrySet()){
+                if(!entry.getKey().equals("sum")){
+                    int numberOfCurrentData = entry.getValue();
+                    int subRectWidth =(int)(CELL_WIDTH * (numberOfCurrentData / (double)sumOfCell));
+                    
+                    color subRectColor = ColorDatabase.getColor(selectedDataset.getEntityKey(),entry.getKey());
+
+                    fill(subRectColor);
+
+                    rect(subRectX, subRectY, subRectWidth, CELL_HEIGHT);
+                    textSize(12);
+                    fill(255);
+                    textAlign(CENTER, CENTER);
+                    text(""+numberOfCurrentData, subRectX + (subRectWidth / 2) , subRectY + (CELL_HEIGHT / 2));
+                    subRectX += subRectWidth;
+                }
+            }
+        }
+    }
+
 }
 
 /*

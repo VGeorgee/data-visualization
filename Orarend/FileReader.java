@@ -7,8 +7,8 @@ public class FileReader {
     public static List<FileEntry> readFile(String fileName) {
         try{
             File file = new File(fileName);
-            //Scanner sc = new Scanner(new FileInputStream(file), "utf-8");
-            Scanner sc = new Scanner(new FileInputStream(file));
+            Scanner sc = new Scanner(new FileInputStream(file), "utf-8");
+            //Scanner sc = new Scanner(new FileInputStream(file));
             ArrayList<FileEntry> list = new ArrayList<>();
 
             sc.nextLine();
