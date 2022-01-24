@@ -17,6 +17,7 @@ String selectedLecturerName = null;
 int selectedLecturerIndex = 0;
 String[] lecturerNames;
 Map<String, Integer> selectedLecturerData;
+String entryKey;
 
 void drawLecturerDataInfoTab(){
     println(selectedLecturerName);
@@ -34,11 +35,12 @@ void initLecturerInfoTab(){
         lecturerNames[i++] = entry.getKey();
     }
     selectedLecturerName = lecturerNames[selectedLecturerIndex];
-    selectedLecturerData = selectedLecturerDataset.getCounts().get(selectedLecturerName);
+    updateCurrentLecturerData();
 }
 
 void updateCurrentLecturerData(){
     selectedLecturerData = selectedLecturerDataset.getCounts().get(selectedLecturerName);
+    entryKey = selectedLecturerDataset.getEntityKey();
 }
 
 void selectNextLecturer(){
@@ -73,7 +75,7 @@ void calculatePieChartData(){
             int calculated = entry.getValue() * multiplier;
             filled += calculated;
             pieChartCalculatedData[i] = calculated; 
-            pieChartDataColor[i++] = ColorDatabase.getColor(selectedLecturerDataset.getEntityKey(), entry.getKey());
+            pieChartDataColor[i++] = ColorDatabase.getColor(entryKey, entry.getKey());
         }
     }
     pieChartCalculatedData[i - 1] += 360 - filled;
