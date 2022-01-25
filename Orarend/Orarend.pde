@@ -74,6 +74,8 @@ void keyPressed(){
   }
   else if(key == 'h'){
     selectedLecturerDataset = subjectByLecturer;
+  } else if(key == 'm') {
+    showCellsByMaxData = !showCellsByMaxData;
   }
   update();
 }

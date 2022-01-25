@@ -3,9 +3,11 @@ int CELL_HEIGHT = 80;
 int CELL_WIDTH = 200;
 
 color CELL_STROKE_COLOR = color(0);
-color CELL_FILL_COLOR = color(245, 239, 66);
+color CELL_FILL_COLOR = color(200, 200, 200);
 int CELL_STROKE_WEIGHT = 2;
 int SUBCELL_STROKE_WEIGHT = 0;
+
+boolean showCellsByMaxData = false;
 
 class TimetableCell {
     int x;
@@ -43,18 +45,35 @@ class TimetableCell {
     }
 
 
+    private int getMaxData(){
+        Map<String, Map<String, Integer>> cellData = selectedDataset.getCounts();
+        int maxData = 0;
+        for(Map.Entry<String, Map<String, Integer>> entry: cellData.entrySet()){
+            if(entry.getValue().containsKey("sum") && maxData < entry.getValue().get("sum")){
+                maxData = entry.getValue().get("sum");
+            }
+        }
+        return maxData;
+    }
+
+
     public void showData(){
         Map<String, Integer> cellData = selectedDataset.getCount(this.getKey());
         
+        int maxData = 0;
+        if(showCellsByMaxData){
+            maxData = getMaxData();
+        }
+
         strokeWeight(SUBCELL_STROKE_WEIGHT);
         if(cellData != null){
             int subRectX = this.x;
             int subRectY = this.y;
-            int sumOfCell = cellData.get("sum");
+            int divide = showCellsByMaxData ? maxData : cellData.get("sum");
             for(Map.Entry<String, Integer> entry: cellData.entrySet()){
                 if(!entry.getKey().equals("sum")){
                     int numberOfCurrentData = entry.getValue();
-                    int subRectWidth =(int)(CELL_WIDTH * (numberOfCurrentData / (double)sumOfCell));
+                    int subRectWidth =(int)(CELL_WIDTH * (numberOfCurrentData / (double)divide));
                     
                     color subRectColor = ColorDatabase.getColor(selectedDataset.getEntityKey(),entry.getKey());
 

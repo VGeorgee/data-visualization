@@ -1,7 +1,7 @@
 import java.util.Map;
 
 int LECTURER_DATA_INFO_TAB_START_X = 30;
-int LECTURER_DATA_INFO_TAB_START_Y = 600;
+int LECTURER_DATA_INFO_TAB_START_Y = 630;
 
 int LECTURER_DATA_SUM_TEXT_X = LECTURER_DATA_INFO_TAB_START_X + 400;
 
@@ -24,6 +24,7 @@ void drawLecturerDataInfoTab(){
     println(selectedLecturerData);
     textSize(24);
     fill(0);
+    textAlign(LEFT);
     text(selectedLecturerName, LECTURER_DATA_INFO_TAB_START_X, LECTURER_DATA_INFO_TAB_START_Y);
     text("Összes kurzus: " + courseTypeByLecturer.getCount(selectedLecturerName).get("sum"), LECTURER_DATA_SUM_TEXT_X, LECTURER_DATA_INFO_TAB_START_Y);
 }
