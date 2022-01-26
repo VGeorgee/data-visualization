@@ -11,6 +11,8 @@ public class Lecturer {
     private List<Curriculum> curriculums;
     private Set<Curriculum> curriculumSet;
 
+    private boolean isSelected;
+
     public Lecturer(String name) {
         this.name = name;
         this.subjects = new ArrayList<>();
@@ -21,6 +23,7 @@ public class Lecturer {
 
         this.curriculums = new ArrayList<>();
         this.curriculumSet = new HashSet<>();
+        this.isSelected = false;
     }
 
     public String getName() {
@@ -37,6 +40,14 @@ public class Lecturer {
 
     public List<Curriculum> getCurriculums() {
         return curriculums;
+    }
+
+    public void select(){
+        this.isSelected = !this.isSelected;
+    }
+
+    public boolean isSelected(){
+        return this.isSelected;
     }
 
     public void addCourse(Course course){

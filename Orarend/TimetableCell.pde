@@ -1,6 +1,6 @@
 import java.util.Map;
-int CELL_HEIGHT = 80;
-int CELL_WIDTH = 200;
+int CELL_HEIGHT = 50;
+int CELL_WIDTH = 150;
 
 color CELL_STROKE_COLOR = color(0);
 color CELL_FILL_COLOR = color(200, 200, 200);

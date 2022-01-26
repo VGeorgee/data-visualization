@@ -3,13 +3,13 @@ import java.util.List;
 import java.util.Map;
 
 public class DatabaseBuilder {
-    private Map<String, Lecturer> lecturers;
-    private Map<String, Subject> subjects;
-    private Map<String, Course> courses;
-    private Map<String, Room> rooms;
-    private Map<String, Schedule> schedules;
-    private Map<String, Curriculum> curriculums;
-    private Map<String, Day> days;
+    public Map<String, Lecturer> lecturers;
+    public Map<String, Subject> subjects;
+    public Map<String, Course> courses;
+    public Map<String, Room> rooms;
+    public Map<String, Schedule> schedules;
+    public Map<String, Curriculum> curriculums;
+    public Map<String, Day> days;
 
     public DatabaseBuilder() {
         this.lecturers = new HashMap<>();

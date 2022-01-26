@@ -1,7 +1,8 @@
 import java.util.Map;
+import java.util.ArrayList;
 
-int LECTURER_DATA_INFO_TAB_START_X = 30;
-int LECTURER_DATA_INFO_TAB_START_Y = 630;
+int LECTURER_DATA_INFO_TAB_START_X = 60;
+int LECTURER_DATA_INFO_TAB_START_Y = 400;
 
 int LECTURER_DATA_SUM_TEXT_X = LECTURER_DATA_INFO_TAB_START_X + 400;
 
@@ -19,6 +20,8 @@ String[] lecturerNames;
 Map<String, Integer> selectedLecturerData;
 String entryKey;
 
+List<Lecturer> selectedLecturers;
+
 void drawLecturerDataInfoTab(){
     println(selectedLecturerName);
     println(selectedLecturerData);
@@ -27,6 +30,22 @@ void drawLecturerDataInfoTab(){
     textAlign(LEFT);
     text(selectedLecturerName, LECTURER_DATA_INFO_TAB_START_X, LECTURER_DATA_INFO_TAB_START_Y);
     text("Összes kurzus: " + courseTypeByLecturer.getCount(selectedLecturerName).get("sum"), LECTURER_DATA_SUM_TEXT_X, LECTURER_DATA_INFO_TAB_START_Y);
+    Lecturer selectedLecturer = databaseBuilder.lecturers.get(selectedLecturerName);
+    if(selectedLecturer.isSelected()){
+        fill(color(255, 0, 0));
+        noStroke();
+        circle(LECTURER_DATA_INFO_TAB_START_X - 30, LECTURER_DATA_INFO_TAB_START_Y - 8, 35);
+    }
+}
+
+void selectCurrentLecturer(){
+    Lecturer selectedLecturer = databaseBuilder.lecturers.get(selectedLecturerName);
+    if(selectedLecturer.isSelected()){
+        selectedLecturers.remove(selectedLecturer);
+    } else {
+        selectedLecturers.add(selectedLecturer);
+    }
+    selectedLecturer.select();
 }
 
 void initLecturerInfoTab(){
@@ -37,6 +56,7 @@ void initLecturerInfoTab(){
     }
     selectedLecturerName = lecturerNames[selectedLecturerIndex];
     updateCurrentLecturerData();
+    selectedLecturers = new ArrayList<>();
 }
 
 void updateCurrentLecturerData(){

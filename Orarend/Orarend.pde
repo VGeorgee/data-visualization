@@ -11,6 +11,7 @@ CurriculumBySchedule curriculumBySchedule;
 CourseTypeByLecturer courseTypeByLecturer;
 CourseTypeBySchedule courseTypeBySchedule;
 SubjectByLecturer subjectByLecturer;
+DatabaseBuilder databaseBuilder; 
 
 Timetable timeTable;
 void setup() {
@@ -20,8 +21,8 @@ void setup() {
   mapper.filterLecturers();
   mapper.simplifyLecturers();
 
-  DatabaseBuilder dbb = new DatabaseBuilder();
-  dbb.buildDatabase(mapper.getEntries());
+  databaseBuilder = new DatabaseBuilder();
+  databaseBuilder.buildDatabase(mapper.getEntries());
 
   Database db = Database.getInstance();
 
@@ -33,7 +34,7 @@ void setup() {
 
   selectedDataset = curriculumBySchedule;
   selectedLecturerDataset = courseTypeByLecturer;
-  timeTable = new Timetable(50, 50);
+  timeTable = new Timetable(40, 40);
   initLecturerInfoTab();
   update();
 }
@@ -74,8 +75,15 @@ void keyPressed(){
   }
   else if(key == 'h'){
     selectedLecturerDataset = subjectByLecturer;
-  } else if(key == 'm') {
+  } 
+  else if(key == 'm') {
     showCellsByMaxData = !showCellsByMaxData;
+  } 
+  else if(key == 'i'){
+    showInfoTab = !showInfoTab;
+  } 
+  else if(key == ' '){
+    selectCurrentLecturer();
   }
   update();
 }

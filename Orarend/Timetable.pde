@@ -1,8 +1,11 @@
 int DAY_COUNT = 5;
 int CELL_PER_DAY = 6;
 
-int CELL_X_MARGIN = 50;
-int CELL_Y_MARGIN = 50;
+int CELL_X_MARGIN = 25;
+int CELL_Y_MARGIN = 0;
+
+int TIMETABLE_MARGIN = 30;
+//int TIMETABLE_WIDTH = CELL_X_MARGIN + (DAY_COUNT * CELL_WIDTH) + TIMETABLE_MARGIN;
 
 String[] DAYS = new String[]{"Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek"};
 String[] DAY_IDS = new String[]{"H", "K", "SZE", "CS", "P"};
@@ -38,14 +41,14 @@ public class Timetable {
 
     private void printMetaData(){
         textSize(20);
-        textAlign(CENTER);
+        textAlign(CENTER, BOTTOM);
         fill(0);
         for (int i = 0; i < DAY_COUNT; ++i) {
             text(DAYS[i], this.x + (i * CELL_WIDTH) + (CELL_WIDTH / 2), this.y - 10);
         }
         
         for (int i= 0; i < CELL_PER_DAY; ++i) {
-            text(SCHEDULES[i], this.x - 35, this.y + (i * CELL_HEIGHT) + 50);
+            text(SCHEDULES[i], this.x - 35, this.y + (i * CELL_HEIGHT) + 40);
         }
     }
 
