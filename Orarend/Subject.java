@@ -7,6 +7,7 @@ public class Subject {
     private String name;
     private Requirement requirementType;
     private Enrollment enrollmentType;
+    private int semester;
     private List<Course> courses;
 
     private int hash;
@@ -26,6 +27,14 @@ public class Subject {
 
     public String getName() {
         return name;
+    }
+
+    public int getSemester(){
+        return this.semester;
+    }
+
+    public void addSemester(int semester){
+        this.semester = semester;
     }
 
     public Requirement getRequirementType() {

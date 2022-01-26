@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class DatabaseBuilder {
@@ -10,6 +11,7 @@ public class DatabaseBuilder {
     public Map<String, Schedule> schedules;
     public Map<String, Curriculum> curriculums;
     public Map<String, Day> days;
+    public Map<String, List<Course>> recommendedSemester;
 
     public DatabaseBuilder() {
         this.lecturers = new HashMap<>();
@@ -19,6 +21,7 @@ public class DatabaseBuilder {
         this.schedules = new HashMap<>();
         this.curriculums = new HashMap<>();
         this.days = new HashMap<>();
+        this.recommendedSemester = new HashMap<>();
     }
 
     public void buildDatabase(List<FileEntry> entries){
@@ -35,17 +38,20 @@ public class DatabaseBuilder {
             Room room = createRoom(scheduleTokens.getRoom());
             Schedule schedule = createSchedule(scheduleTokens.getStart(), scheduleTokens.getEnd());
             Curriculum curriculum = createCurriculum(entry.curriculum);
-            Course course = createCourse(entry.courseCode, courseType, lecturer, room, day, schedule, subject, curriculum);
+            Course course = createCourse(entry.courseCode, courseType, lecturer, room, day, schedule, subject, curriculum, entry.semesterNumber);
+            List<Course> recommended = getRecommendedSemester(entry.semesterNumber + "");
 
             lecturer.addSubject(subject);
             lecturer.addCurriculum(curriculum);
             lecturer.addCourse(course);
             day.addCourse(course);
             subject.addCourse(course);
+            subject.addSemester(entry.semesterNumber);
             course.setSubject(subject);
             room.addCourse(course);
             curriculum.addCourse(course);
-
+            curriculum.addSubject(subject);
+            recommended.add(course);
             database.courses.add(course);
         }
 
@@ -115,6 +121,13 @@ public class DatabaseBuilder {
         return this.curriculums.get(curriculumName);
     }
 
+    private List<Course> getRecommendedSemester(String recommendedSemester){
+        if(!this.recommendedSemester.containsKey(recommendedSemester)){
+            this.recommendedSemester.put(recommendedSemester, new ArrayList<>());
+        }
+        return this.recommendedSemester.get(recommendedSemester);
+    }
+
     private Subject createSubject(String subjectCode, String subjectName, Requirement requirement, Enrollment enrollment){
         if(!this.subjects.containsKey(subjectCode)){
             Subject subject = new Subject(subjectCode, subjectName, requirement, enrollment);
@@ -129,9 +142,10 @@ public class DatabaseBuilder {
                                 Room room, Day day,
                                 Schedule schedule,
                                 Subject subject,
-                                Curriculum curriculum){
+                                Curriculum curriculum,
+                                int semesterNumber){
         if(!this.courses.containsKey(courseCode)){
-            Course course = new Course(courseCode, courseType, lecturer, room, day, schedule, curriculum);
+            Course course = new Course(courseCode, courseType, lecturer, room, day, schedule, curriculum, semesterNumber);
             this.courses.put(courseCode, course);
         }
         return this.courses.get(courseCode);

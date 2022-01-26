@@ -9,8 +9,9 @@ public class Course {
     private Schedule schedule;
     private Curriculum curriculum;
     private Subject subject;
+    private int semester;
 
-    public Course(String code, CourseType type, Lecturer lecturer, Room room, Day day, Schedule schedule, Curriculum curriculum) {
+    public Course(String code, CourseType type, Lecturer lecturer, Room room, Day day, Schedule schedule, Curriculum curriculum, int semester) {
         this.code = code;
         this.type = type;
         this.lecturer = lecturer;
@@ -18,6 +19,7 @@ public class Course {
         this.day = day;
         this.schedule = schedule;
         this.curriculum = curriculum;
+        this.semester = semester;
     }
 
     public Lecturer getLecturer() {
@@ -54,6 +56,10 @@ public class Course {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public int getSemester(){
+        return this.semester;
     }
 
     @Override

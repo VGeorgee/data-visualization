@@ -36,6 +36,7 @@ void setup() {
   selectedLecturerDataset = courseTypeByLecturer;
   timeTable = new Timetable(40, 40);
   initLecturerInfoTab();
+  initCurriculumComparison();
   update();
 }
 
@@ -51,6 +52,7 @@ void update(){
   calculatePieChartData();
   updateCurrentLecturerData();
   drawLecturerDataInfoTab();
+  drawCurriculumComparison();
 }
 
 
@@ -80,10 +82,24 @@ void keyPressed(){
     showCellsByMaxData = !showCellsByMaxData;
   } 
   else if(key == 'i'){
-    showInfoTab = !showInfoTab;
+    changeShow();
   } 
   else if(key == ' '){
     selectCurrentLecturer();
   }
+  else if(key == 'e'){
+    previousCurriculum();
+  }
+  else if(key == 'r'){
+    nextCurriculum();
+  }
+  else if(key == 't'){
+    selectCurriculum();
+  }
   update();
+}
+
+void changeShow(){
+    showCurriculumComparison = !showCurriculumComparison;
+    showInfoTab = !showInfoTab;
 }
