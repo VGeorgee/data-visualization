@@ -34,9 +34,10 @@ void setup() {
 
   selectedDataset = curriculumBySchedule;
   selectedLecturerDataset = courseTypeByLecturer;
-  timeTable = new Timetable(40, 40);
+  timeTable = new Timetable(40, 40, false);
   initLecturerInfoTab();
   initCurriculumComparison();
+  initLecturerComparer();
   update();
 }
 
@@ -53,6 +54,7 @@ void update(){
   updateCurrentLecturerData();
   drawLecturerDataInfoTab();
   drawCurriculumComparison();
+  showLecturerComparison();
 }
 
 

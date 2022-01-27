@@ -14,12 +14,15 @@ class TimetableCell {
     int y;
     String day;
     String schedule;
+    private boolean dataType;
 
-    public TimetableCell(int x, int y, String day, String schedule){
+
+    public TimetableCell(int x, int y, String day, String schedule, boolean dataType){
         this.x = x;
         this.y = y;
         this.day = day;
         this.schedule = schedule;
+        this.dataType = dataType;
         this.draw();
     }
 
@@ -44,6 +47,10 @@ class TimetableCell {
         return this.day + this.schedule;
     }
 
+    public void changeDataType(){
+        this.dataType = true;
+    }
+
 
     private int getMaxData(){
         Map<String, Map<String, Integer>> cellData = selectedDataset.getCounts();
@@ -58,6 +65,16 @@ class TimetableCell {
 
 
     public void showData(){
+        if(this.dataType == false){
+            this.showOriginalData();
+        } else {
+            this.showComparisonData();
+        }
+    }
+
+    
+
+    public void showOriginalData(){
         Map<String, Integer> cellData = selectedDataset.getCount(this.getKey());
         
         int maxData = 0;
@@ -90,7 +107,32 @@ class TimetableCell {
         }
     }
 
+    private void showComparisonData(){
+        ArrayList<Lecturer> lecturersToShow = new ArrayList<>();
+        for(Lecturer lecturer: selectedLecturers){
+            if(lecturer.getCourseForSchedule(day, schedule) != null){
+                lecturersToShow.add(lecturer);
+            }
+        }
+        if(lecturersToShow.size() > 0) {
+            int margin = CELL_WIDTH / (lecturersToShow.size() + 1);
+            
+            int currentX = this.x + margin;
+            int d = margin < 45 ? margin : 45;
+            d -= 5;
+            noStroke();
+            for(int i = 0; i < lecturersToShow.size(); i++){
+                color c = ColorDatabase.getColor("Lecturers", lecturersToShow.get(i).getName());
+                fill(c);
+                circle(currentX, this.y + CELL_HEIGHT / 2, d);
+                currentX += margin;
+            }
+        }
+    }
+
 }
+
+
 
 /*
 

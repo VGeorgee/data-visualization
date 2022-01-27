@@ -32,7 +32,8 @@ void drawLecturerDataInfoTab(){
     text("Összes kurzus: " + courseTypeByLecturer.getCount(selectedLecturerName).get("sum"), LECTURER_DATA_SUM_TEXT_X, LECTURER_DATA_INFO_TAB_START_Y);
     Lecturer selectedLecturer = databaseBuilder.lecturers.get(selectedLecturerName);
     if(selectedLecturer.isSelected()){
-        fill(color(255, 0, 0));
+        color c = ColorDatabase.getColor("Lecturers", selectedLecturer.getName());
+        fill(c);
         noStroke();
         circle(LECTURER_DATA_INFO_TAB_START_X - 30, LECTURER_DATA_INFO_TAB_START_Y - 8, 35);
     }

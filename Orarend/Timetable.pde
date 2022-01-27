@@ -16,16 +16,18 @@ public class Timetable {
     private int x;
     private int y;
     private TimetableCell[][] cells;
+    private boolean dataType;
 
-    public Timetable (int x, int y) {
+    public Timetable (int x, int y, boolean dataType) {
         this.x = x + CELL_X_MARGIN;
         this.y = y + CELL_Y_MARGIN;
         this.cells = new TimetableCell[DAY_COUNT][CELL_PER_DAY];
+        this.dataType = dataType;
         for (int i = 0; i < DAY_COUNT; ++i) {
             for (int j = 0; j < CELL_PER_DAY; ++j) {
                 int cx = i * CELL_WIDTH + this.x;
                 int cy = j * CELL_HEIGHT + this.y;
-                this.cells[i][j] = new TimetableCell(cx, cy, DAY_IDS[i], SCHEDULE_IDS[j]);
+                this.cells[i][j] = new TimetableCell(cx, cy, DAY_IDS[i], SCHEDULE_IDS[j], dataType);
             }
         }
     }

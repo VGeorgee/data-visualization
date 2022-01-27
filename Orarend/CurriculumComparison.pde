@@ -84,10 +84,11 @@ int getPositionXForSemesterNumber(int semesterNumber){
 }
 
 void drawComparisonDiagram(){
+    strokeWeight(1);
+    stroke(CURRICULUM_COMPARISON_TEXT_COLOR);
     fill(CURRICULUM_COMPARISON_DIAGRAM_BACKGROUND_COLOR);
     rect(CURRICULUM_COMPARISON_X, CURRICULUM_COMPARISON_Y, CURRICULUM_COMPARISON_WIDTH, CURRICULUM_COMPARISON_HEIGHT);
 
-    strokeWeight(1);
     fill(CURRICULUM_COMPARISON_TEXT_COLOR);
     textSize(CURRICULUM_COMPARISON_TEXT_SIZE);
     for(int i = 0; i < MAX_SEMESTERS; i++){
@@ -117,7 +118,8 @@ void drawCurriculumData(){
         stroke(currentColor);
         for(int semester = 0; semester < MAX_SEMESTERS; semester++){
             int currentX = getPositionXForSemesterNumber(semester);
-            int currentY = getPositionYForCourseCount(curriculum.getNumberOfSubjectsForSemester(semester));
+            int numberOfSubjects = curriculum.getNumberOfSubjectsForSemester(semester);
+            int currentY = getPositionYForCourseCount(numberOfSubjects);
             circle(currentX, currentY, CURRICULUM_CIRCLE_WIDTH);
             if(previousX != 0 && previousY != 0){
                 line(previousX, previousY, currentX, currentY);

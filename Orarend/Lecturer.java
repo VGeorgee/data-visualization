@@ -68,6 +68,15 @@ public class Lecturer {
         this.curriculums.add(curriculum);
     }
 
+    public Course getCourseForSchedule(String day, String daySchedule){
+        for(Course course: this.courses){
+            if(course.getDay().getName().equals(day) && daySchedule.equals(""+course.getSchedule().getStart())){
+                return course;
+            }
+        }
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
