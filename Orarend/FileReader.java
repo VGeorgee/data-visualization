@@ -38,7 +38,6 @@ public class FileReader {
             credits = "-1";
         }
 
-        System.out.println(tokens[11]);
 
         FileEntry fe = new FileEntry(
                 tokens[0],

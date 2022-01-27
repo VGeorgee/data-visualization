@@ -23,8 +23,6 @@ String entryKey;
 List<Lecturer> selectedLecturers;
 
 void drawLecturerDataInfoTab(){
-    println(selectedLecturerName);
-    println(selectedLecturerData);
     textSize(24);
     fill(0);
     textAlign(LEFT);

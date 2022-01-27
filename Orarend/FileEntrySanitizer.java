@@ -32,21 +32,11 @@ public class FileEntrySanitizer {
 
 
         for(FileEntry lecture: this.lectures){
-           // System.out.println(lecture);
             List<FileEntry> coursesForLecture = this.courses.get(lecture.subjectName);
             for(FileEntry course: coursesForLecture){
                 this.removeLecturer(course, lecture.lecturers);
             }
         }
-
-
-        for(FileEntry course: this.entries) {
-            if(course.lecturers.contains(", ") && !course.requirementType.equals("Gyakorlati jegy")){
-                System.out.println(course);
-            }
-        }
-
-
     }
 
     private void removeLecturer(FileEntry course, String lecturer){

@@ -73,6 +73,7 @@ public class DatabaseBuilder {
 
         for (Map.Entry<String, Curriculum> entry : curriculums.entrySet()){
             database.curriculums.add(entry.getValue());
+            System.out.println(entry.getKey());
         }
 
         for (Map.Entry<String, Day> entry : days.entrySet()){

@@ -34,6 +34,8 @@ void setup() {
 
   selectedDataset = curriculumBySchedule;
   selectedLecturerDataset = courseTypeByLecturer;
+
+  ColorDatabase.setBaseColors();
   timeTable = new Timetable(40, 40, false);
   initLecturerInfoTab();
   initCurriculumComparison();

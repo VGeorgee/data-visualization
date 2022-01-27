@@ -12,6 +12,5 @@ void initLecturerComparer(){
 }
 
 void showLecturerComparison(){
-    println(lecturerTimetable);
     lecturerTimetable.draw();
 }
