@@ -22,6 +22,9 @@ int CURRICULUM_COMPARISON_LINE_WIDTH = 2;
 
 int MAX_COURSES_PER_SEMESTER = 15;
 int MAX_SEMESTERS = 9;
+int NUMBER_OF_COLUMNS = 4;
+
+int HISTOGRAM_START_Y = CURRICULUM_COMPARISON_Y + CURRICULUM_COMPARISON_HEIGHT;
 
 int SEMESTER_MARGIN = 30;
 int COURSE_MARGIN = 30;
@@ -76,7 +79,7 @@ int getPositionYForCourseCount(int courseCount){
 }
 
 double getStepSizeX(){
-    return CURRICULUM_COMPARISON_WIDTH / (double) MAX_SEMESTERS;
+    return CURRICULUM_COMPARISON_WIDTH / (double) NUMBER_OF_COLUMNS;
 }
 
 int getPositionXForSemesterNumber(int semesterNumber){
@@ -91,7 +94,7 @@ void drawComparisonDiagram(){
 
     fill(CURRICULUM_COMPARISON_TEXT_COLOR);
     textSize(CURRICULUM_COMPARISON_TEXT_SIZE);
-    for(int i = 0; i < MAX_SEMESTERS; i++){
+    for(int i = 0; i < NUMBER_OF_COLUMNS; i++){
         text((i + 1) + "", getPositionXForSemesterNumber(i), CURRICULUM_COMPARISON_Y + CURRICULUM_COMPARISON_HEIGHT + 30);
     }
     for(int i = 0; i < MAX_COURSES_PER_SEMESTER; i++){
@@ -108,24 +111,28 @@ void drawComparisonDiagram(){
     }
 }
 
+int HISTOGRAM_WIDTH = 15;
+int columnOffset(){
+    return (CURRICULUM_COMPARISON_WIDTH / NUMBER_OF_COLUMNS) / selectedCurriculums.size();
+}
 void drawCurriculumData(){
     strokeWeight(CURRICULUM_COMPARISON_LINE_WIDTH);
+    
+    strokeCap(SQUARE);  
+    int curriculumIndex = 0;
     for(Curriculum curriculum: selectedCurriculums){
-        int previousX = 0;
-        int previousY = 0;
         color currentColor = ColorDatabase.getColor(CURRICULUM_COMPARISON_COLOR_ENTITY_KEY, curriculum.getName());
         fill(currentColor);
         stroke(currentColor);
-        for(int semester = 0; semester < MAX_SEMESTERS; semester++){
-            int currentX = getPositionXForSemesterNumber(semester);
+        strokeWeight(HISTOGRAM_WIDTH);
+        int offset =  (columnOffset() * curriculumIndex++);
+        int xIndex = 0;
+        for(int semester = 1; semester < MAX_SEMESTERS; semester+=2){
+            int x = getPositionXForSemesterNumber(xIndex) + offset;
+            xIndex++;
             int numberOfSubjects = curriculum.getNumberOfSubjectsForSemester(semester);
-            int currentY = getPositionYForCourseCount(numberOfSubjects);
-            circle(currentX, currentY, CURRICULUM_CIRCLE_WIDTH);
-            if(previousX != 0 && previousY != 0){
-                line(previousX, previousY, currentX, currentY);
-            }
-            previousX = currentX;
-            previousY = currentY;
+            int y = getPositionYForCourseCount(numberOfSubjects);
+            line(x, y, x, HISTOGRAM_START_Y);
         }
     }
 }
