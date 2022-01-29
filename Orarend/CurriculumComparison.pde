@@ -125,14 +125,14 @@ void drawCurriculumData(){
         fill(currentColor);
         stroke(currentColor);
         strokeWeight(HISTOGRAM_WIDTH);
-        int offset =  (columnOffset() * curriculumIndex++);
         int xIndex = 0;
         for(int semester = 1; semester < MAX_SEMESTERS; semester+=2){
-            int x = getPositionXForSemesterNumber(xIndex) + offset;
+            int x = getPositionXForSemesterNumber(xIndex) + (HISTOGRAM_WIDTH * curriculumIndex + 5);
             xIndex++;
             int numberOfSubjects = curriculum.getNumberOfSubjectsForSemester(semester);
             int y = getPositionYForCourseCount(numberOfSubjects);
             line(x, y, x, HISTOGRAM_START_Y);
         }
+        curriculumIndex++;
     }
 }
